@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Consulta Clientes</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Bloco de referências para bootstrap, jquery e popper -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" ></script>
+        <!-- Bloco de referências para bootstrap, jquery e popper -->
+        
+        <!-- Bloco de Script CSS da margem superior -->
+        <style>
+            #cont{
+               margin-top: 50px;
+               width: 50%;
+            }
+        </style>
+        <!-- Bloco de Script CSS da margem superior -->
+        
+        <!-- Bloco de Script CSS de formatação da tabela em AJAX -->
+        <style>
+            table,th,td {
+              border : 1px solid black;
+              border-collapse: collapse;
+            }
+            th,td {
+              padding: 5px;
+            }
+        </style>
+        <!-- Bloco de Script CSS de formatação da tabela em AJAX -->
+        
+    </head>
+    <body>
+        
+        <!-- Bloco de código php de conexao-->
+        <?php 
+            include 'conexao.php';       
+        ?>
+        <!-- Bloco de código php de conexao-->
+        
+        <header>          
+        </header>
+        <nav></nav>
+        <section>
+            <!-- Bloco de container do formulário -->
+            <div class="container" id="cont">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Consulta de Clientes</div>
+                    <div class="panel-body">
+                        <h3>Consulta</h3><br>
+                        <div class="form-group">
+
+                            <!-- Bloco de código do formulário -->
+                            <form>
+
+                            <!-- Bloco de código do campo de consulta -->
+                            <label for="usr">Nome do Cliente:</label>
+                            <div class="input-group"><span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control" id="usr" size="100" name="tbl_nome" placeholder="Digite aqui o nome do cliente para consulta!">
+                            <span class="glyphicons glyphicons-user"></span>
+                            </div><br>
+                            <!-- Bloco de código do campo de consulta -->
+                            
+                            <!-- Bloco de código do botão de consulta -->
+                            <button type="button" class="btn btn-primary" onclick="loadXMLDoc()">Consulta</button>
+                            <!-- Bloco de código do botão de consulta -->
+                            
+                            </form>
+                            <!-- Bloco de código do formulário -->
+                            
+                            <!-- Bloco de código da tabela em AJAX -->
+                            <br><br>
+                            <table id="tab1"></table>
+                            
+                            <!-- Bloco de código do script em AJAX -->
+                            <script>
+                                function loadXMLDoc() {
+                                  var xmlhttp = new XMLHttpRequest();
+                                  xmlhttp.onreadystatechange = function() {
+                                    if (this.readyState == 4 && this.status == 200) {
+                                      myFunction(this);
+                                    }
+                                  };
+                                  xmlhttp.open("GET", "clientes_curl.php", true);
+                                  xmlhttp.send();
+                                }
+                                function myFunction(xml) {
+                                  var i;
+                                  var xmlDoc = xml.responseXML;
+                                  var table="<tr><th>Categoria</th></tr>";
+                                  var x = xmlDoc.getElementsByTagName("");
+                                  for (i = 0; i <x.length; i++) { 
+                                    table += "<tr><td>" +
+                                    x[i].getElementsByTagName("Categoria")[0].childNodes[0].nodeValue +
+                                    "</td></tr>";
+                                  }
+                                  document.getElementById("tab1").innerHTML = table;
+                                }
+                            </script>
+                            <!-- Bloco de código do script em AJAX -->
+                            
+                            <!-- Bloco de código da tabela em AJAX -->
+                            
+                        </div>
+                    </div>
+                </div>            
+            </div>
+            <!-- Bloco de container do formulário -->
+        </section>
+        <footer></footer>   
+        
+    </body>
+</html>
